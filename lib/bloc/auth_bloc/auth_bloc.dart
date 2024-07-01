@@ -3,6 +3,7 @@ import 'package:chat_baba/bloc/auth_bloc/auth_event.dart';
 import 'package:chat_baba/bloc/auth_bloc/auth_state.dart';
 import 'package:chat_baba/bloc/user_bloc/user_event.dart';
 import 'package:chat_baba/helper/dependency.dart';
+import 'package:chat_baba/helper/storage_helper.dart';
 import 'package:chat_baba/model/request/create_user_request.dart';
 import 'package:chat_baba/model/response/app_user_response.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,6 +13,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthStateResponse> {
   AuthBloc(AuthStateResponse authStateResponse) : super(AuthStateResponse()) {
     on<CreateUserEvent>(_onCreateUser);
     on<LoginEvent>(_onLoginEvent);
+    on<LogoutEvent>(_onLogoutEvent);
   }
 
   _onCreateUser(CreateUserEvent event, Emitter<AuthStateResponse> emit) async {
@@ -33,6 +35,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthStateResponse> {
         state: AuthState.authenticating,
       ));
       var user = await getRepo().login(event.email, event.password);
+      getUserBloc()?.add(GetCurrentUserEvent());
       emit(state.copyWith(
         state: AuthState.authenticated,
         user: user,
@@ -44,4 +47,24 @@ class AuthBloc extends Bloc<AuthEvent, AuthStateResponse> {
       ));
     }
   }
+
+  Future<FutureOr<void>> _onLogoutEvent(
+      LogoutEvent event, Emitter<AuthStateResponse> emit) async {
+    try {
+      var res = getRepo().logout();
+      await StorageHelper().setAccessToken("");
+      await StorageHelper().setRefreshToken("");
+      await StorageHelper().setIsLoggedIn(false);
+      await StorageHelper().setUserId("");
+      emit(state.copyWith(state: AuthState.unAuth));
+    } catch (e) {
+      emit(state.copyWith(
+        state: AuthState.failed,
+        error: "Something Went Wrong",
+      ));
+    }
+  }
+
+  FutureOr<void> _onGetCurrentUserEvent(
+      GetCurrentUserEvent event, Emitter<AuthStateResponse> emit) {}
 }

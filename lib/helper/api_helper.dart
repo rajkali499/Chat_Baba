@@ -20,11 +20,11 @@ var socketUrl = environment.socketUrl;
 class ApiHelper {
   getAccessToken() async {
     String refreshToken = await StorageHelper().getRefreshTokenToken();
-    if (refreshToken.isEmpty) {
-      refreshToken =
-          // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImthbGlAZ21haWwuY29tIiwiaWQiOiIyYjEyMGY3NS0xYWRlLTQ3MDItOGNlMC0xNDczYzc2MTY5YzciLCJleHAiOjE3MTk2MDQxNTYsInRva2VuX3R5cGUiOiJyZWZyZXNoX3Rva2VuIn0.tkSPcpO9FxFFMF_pq-UO9bf1IfdvbFtUnVUV1QCjauE"; // refreshToken =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhhcmlwcmFzYXRoQGdtYWlsLmNvbSIsImlkIjoiZTI1YmZlOTYtYTQzNi00Mjg0LWE1YTgtOTJlMWEwZDNiYWI5IiwiZXhwIjoxNzE5NDQwODE2LCJ0b2tlbl90eXBlIjoiYWNjZXNzX3Rva2VuIn0.Ea9rf983WeKaJNycESaWf9hUkKz3anRgNaLrGwdIapA";
-    }
+    // if (refreshToken.isEmpty) {
+    //   refreshToken =
+    //       // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImthbGlAZ21haWwuY29tIiwiaWQiOiIyYjEyMGY3NS0xYWRlLTQ3MDItOGNlMC0xNDczYzc2MTY5YzciLCJleHAiOjE3MTk2MDQxNTYsInRva2VuX3R5cGUiOiJyZWZyZXNoX3Rva2VuIn0.tkSPcpO9FxFFMF_pq-UO9bf1IfdvbFtUnVUV1QCjauE"; // refreshToken =
+    //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhhcmlwcmFzYXRoQGdtYWlsLmNvbSIsImlkIjoiZTI1YmZlOTYtYTQzNi00Mjg0LWE1YTgtOTJlMWEwZDNiYWI5IiwiZXhwIjoxNzE5NDQwODE2LCJ0b2tlbl90eXBlIjoiYWNjZXNzX3Rva2VuIn0.Ea9rf983WeKaJNycESaWf9hUkKz3anRgNaLrGwdIapA";
+    // }
     var body = {"refresh_token": refreshToken};
     var res =
         await makeReq("${baseUrlAuth}refresh_token/", body, method: Method.GET);
@@ -51,11 +51,11 @@ class ApiHelper {
       Uri url = Uri.parse(URL);
       http.Response response;
       var token =  await StorageHelper().getAccessToken();
-      if (token.isEmpty) {
-        token =
-            // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImthbGlAZ21haWwuY29tIiwiaWQiOiIyYjEyMGY3NS0xYWRlLTQ3MDItOGNlMC0xNDczYzc2MTY5YzciLCJleHAiOjE3MTg4MzY1MzIsInRva2VuX3R5cGUiOiJhY2Nlc3NfdG9rZW4ifQ.gXZPtRIb2KJJGPPyKYjOtz2kiFEaW1ROXOvxOK7aEjs";
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhhcmlwcmFzYXRoQGdtYWlsLmNvbSIsImlkIjoiZTI1YmZlOTYtYTQzNi00Mjg0LWE1YTgtOTJlMWEwZDNiYWI5IiwiZXhwIjoxNzE5NDQwODE2LCJ0b2tlbl90eXBlIjoiYWNjZXNzX3Rva2VuIn0.Ea9rf983WeKaJNycESaWf9hUkKz3anRgNaLrGwdIapA";
-      }
+      // if (token.isEmpty) {
+      //   token =
+      //       // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImthbGlAZ21haWwuY29tIiwiaWQiOiIyYjEyMGY3NS0xYWRlLTQ3MDItOGNlMC0xNDczYzc2MTY5YzciLCJleHAiOjE3MTg4MzY1MzIsInRva2VuX3R5cGUiOiJhY2Nlc3NfdG9rZW4ifQ.gXZPtRIb2KJJGPPyKYjOtz2kiFEaW1ROXOvxOK7aEjs";
+      //       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhhcmlwcmFzYXRoQGdtYWlsLmNvbSIsImlkIjoiZTI1YmZlOTYtYTQzNi00Mjg0LWE1YTgtOTJlMWEwZDNiYWI5IiwiZXhwIjoxNzE5NDQwODE2LCJ0b2tlbl90eXBlIjoiYWNjZXNzX3Rva2VuIn0.Ea9rf983WeKaJNycESaWf9hUkKz3anRgNaLrGwdIapA";
+      // }
       var headers = {
         'Content-Type': 'application/json',
         'authorization': "Bearer $token"
@@ -156,11 +156,11 @@ class ApiHelper {
       Uri url = Uri.parse(URL);
       http.Response response;
       var token = await StorageHelper().getAccessToken();
-      if (token.isEmpty) {
-        token =
-            // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImthbGlAZ21haWwuY29tIiwiaWQiOiIyYjEyMGY3NS0xYWRlLTQ3MDItOGNlMC0xNDczYzc2MTY5YzciLCJleHAiOjE3MTg4MzY1MzIsInRva2VuX3R5cGUiOiJhY2Nlc3NfdG9rZW4ifQ.gXZPtRIb2KJJGPPyKYjOtz2kiFEaW1ROXOvxOK7aEjs";
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImthbGlAZ21haWwuY29tIiwiaWQiOiIyYjEyMGY3NS0xYWRlLTQ3MDItOGNlMC0xNDczYzc2MTY5YzciLCJleHAiOjE3MTg4MzY1MzIsInRva2VuX3R5cGUiOiJhY2Nlc3NfdG9rZW4ifQ.gXZPtRIb2KJJGPPyKYjOtz2kiFEaW1ROXOvxOK7aEjs";
-      }
+      // if (token.isEmpty) {
+      //   token =
+      //       // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImthbGlAZ21haWwuY29tIiwiaWQiOiIyYjEyMGY3NS0xYWRlLTQ3MDItOGNlMC0xNDczYzc2MTY5YzciLCJleHAiOjE3MTg4MzY1MzIsInRva2VuX3R5cGUiOiJhY2Nlc3NfdG9rZW4ifQ.gXZPtRIb2KJJGPPyKYjOtz2kiFEaW1ROXOvxOK7aEjs";
+      //       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImthbGlAZ21haWwuY29tIiwiaWQiOiIyYjEyMGY3NS0xYWRlLTQ3MDItOGNlMC0xNDczYzc2MTY5YzciLCJleHAiOjE3MTg4MzY1MzIsInRva2VuX3R5cGUiOiJhY2Nlc3NfdG9rZW4ifQ.gXZPtRIb2KJJGPPyKYjOtz2kiFEaW1ROXOvxOK7aEjs";
+      // }
       var headers = token.isNotEmpty
           ? {
               'Content-Type': 'application/json',

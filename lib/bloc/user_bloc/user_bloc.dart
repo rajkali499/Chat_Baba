@@ -14,7 +14,9 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
     on<GetUsersByIdsEvent>(_onGetUsersByIds);
 
-    on<GetCurrentUser>(_onGetCurrentUser);
+    on<GetCurrentUserEvent>(_onGetCurrentUser);
+
+    on<ChangeUserPasswordEvent>(_onChangeUserPassword);
   }
 
   Future<FutureOr<void>> _getUsers(
@@ -69,10 +71,19 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   }
 
   Future<FutureOr<void>> _onGetCurrentUser(
-      GetCurrentUser event, Emitter<UserState> emit) async {
+      GetCurrentUserEvent event, Emitter<UserState> emit) async {
     try {
       var user = await getRepo().getCurrentUser();
       emit(state.copyWith(currentUser: user));
     } catch (e) {}
+  }
+
+
+  Future<FutureOr<void>> _onChangeUserPassword(ChangeUserPasswordEvent event, Emitter<UserState> emit) async {
+    try{
+      var res = await getRepo().changePassword(event.changeUserPasswordRequest);
+    }catch(e){
+
+    }
   }
 }

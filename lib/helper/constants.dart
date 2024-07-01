@@ -38,6 +38,8 @@ Map<String, String>  assetsMap = {
   "user_icon": "assets/user_icon.png",
   "users_icon": "assets/users_icon.png",
   "microphone_icon": "assets/microphone_icon.svg",
+  "onboarding_img" : "assets/onboarding_page_img.svg",
+  "shield_icon" : "assets/ph_shield_icon.svg",
 };
 
 Map<String, String> textMap = {
@@ -53,6 +55,24 @@ Map<String, String> textMap = {
   "no": "No",
   "online": "Online",
   "type_message": "Type Message",
+  "onboarding_text" : "Stay connected with your friends and family",
+  "secure_messages" : "Secure, private messaging",
+  "get_started" : "Get Started",
+  "login" : "Login",
+  "enter_your_email_and_password_to_login" : "Enter your email and password to log in",
+  "email" : "Email",
+  "password" : "Password",
+  "remember_me" : "Remember me",
+  "forgot_password" : "Forgot Password ?",
+  "log_in" : "Log In",
+  "register" : "Register",
+  "sign_up" : "Sign Up",
+  "already_have_an_account" : "Already have an account?",
+  "name" : "Name",
+  "mobile_number" : "Mobile Number",
+  "do_not_have_account" : "Don’t have an account?",
+  "create_an_account_to_continue" : "Create an account to continue!",
+  "logout" : "Logout"
 };
 
 ValueNotifier<int> selectedIndex = ValueNotifier(0);

@@ -1,6 +1,7 @@
 import 'dart:collection';
 import 'package:chat_baba/helper/dependency.dart';
 import 'package:chat_baba/helper/storage_helper.dart';
+import 'package:chat_baba/model/request/change_user_password_request.dart';
 import 'package:chat_baba/model/request/create_chat_request.dart';
 import 'package:chat_baba/model/request/send_message_request.dart';
 import 'package:chat_baba/model/response/get_chats_response.dart';
@@ -97,7 +98,7 @@ class ApiServiceHelper extends ServiceHelper {
       {required List<String> participantIds}) async {
     try {
       var getAllUser = await getRepo().apiHelper.makeReq(
-          "${baseUrlAuth}users_from_list/", participantIds,
+          "${baseUrlAuth}users_from_list", participantIds,
           method: Method.POST, isToken: true);
       return (getAllUser as List?)
               ?.map(
@@ -182,6 +183,28 @@ class ApiServiceHelper extends ServiceHelper {
           method: Method.POST, isToken: true);
       return GetMessagesResponse.fromJson(
           Map.from(messageRes) as LinkedHashMap);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<String> logout() async {
+    try {
+      var res = await getRepo().apiHelper.makeReq(
+          "${baseUrlAuth}logout_user", null,
+          isToken: true, method: Method.GET);
+      return res;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  changePassword(ChangeUserPasswordRequest changeUserPasswordRequest) async {
+    try {
+      var res = await getRepo().apiHelper.makeReq(
+          "${baseUrlAuth}change_password", changeUserPasswordRequest.toJson(),
+          isToken: true, method: Method.PUT);
+      return res;
     } catch (e) {
       rethrow;
     }

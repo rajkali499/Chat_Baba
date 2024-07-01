@@ -83,7 +83,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       );
       emit(state.copyWith(
           getMessagesOnChatProcessState: ProcessState.done,
-          messagesOnChats: messageList.reversed.toList()));
+          messagesOnChats: messageList));
       emit(state.copyWith(
         getMessagesOnChatProcessState: ProcessState.none,
       ));
@@ -101,7 +101,9 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       var res = await getRepo().sendMessage(event.sendMessageRequest);
       emit(state.copyWith(sendMessageState: ProcessState.done));
 
-      emit(state.copyWith(sendMessageState: ProcessState.none));
+      await Future.delayed(const Duration(microseconds: 100), () {
+        emit(state.copyWith(sendMessageState: ProcessState.none));
+      });
     } catch (e) {
       emit(state.copyWith(
           sendMessageState: ProcessState.failed,
@@ -115,12 +117,14 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     final uri = Uri.parse('ws:${socketUrl}ws/$chatId?? ' '}');
     _socket =
         WebSocket(uri, backoff: backoff, timeout: const Duration(seconds: 5));
-    currentUserId = (await getRepo().getCurrentUser())?.id ?? "";
+    // currentUserId = (await getRepo().getCurrentUser())?.id ?? "";
     _socket.connection
         .listen((state) => debugPrint('state: "${state.toString()}"'));
     // Listen for incoming messages.
     _socket.messages.listen((message) {
-      debugPrint("on Receive ${jsonDecode(message)}");
+      if (message != "User left the chat") {
+        debugPrint("on Receive ${jsonDecode(message)}");
+      }
 
       final jsonMessage = jsonDecode(message);
       if (jsonMessage is Map) {
@@ -128,13 +132,13 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
         // Find the index of the message with the same ID, if it exists
         int? existingIndex = state.messagesOnChats
-            ?.indexWhere((msg) => msg.content == newMessage.content);
+            ?.indexWhere((msg) => msg.id == newMessage.id && msg.content == msg.content);
         if ((existingIndex ?? -1) != -1) {
           // Update the existing message
           state.messagesOnChats?[existingIndex ?? -1] = newMessage;
         } else {
           // Add the new message
-          state.messagesOnChats?.add(newMessage);
+          state.messagesOnChats?.insert(0,newMessage);
         }
         getChatBloc()?.add(RefreshChatEvent());
       }
@@ -150,6 +154,8 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     emit(state.copyWith(
         sendMessageState: ProcessState.done,
         messagesOnChats: state.messagesOnChats));
-    emit(state.copyWith(sendMessageState: ProcessState.none));
+    await Future.delayed(const Duration(microseconds: 100), () {
+      emit(state.copyWith(sendMessageState: ProcessState.none));
+    });
   }
 }

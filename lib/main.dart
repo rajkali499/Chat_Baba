@@ -3,6 +3,7 @@ import 'package:chat_baba/bloc/auth_bloc/auth_event.dart';
 import 'package:chat_baba/bloc/auth_bloc/auth_state.dart';
 import 'package:chat_baba/bloc/chat_bloc/chat_bloc.dart';
 import 'package:chat_baba/bloc/user_bloc/user_bloc.dart';
+import 'package:chat_baba/bloc/user_bloc/user_event.dart';
 import 'package:chat_baba/env/dev_env.dart';
 import 'package:chat_baba/env/env.dart';
 import 'package:chat_baba/helper/api_helper.dart';
@@ -54,8 +55,7 @@ class MyApp extends StatelessWidget {
           initialRoute: route,
           onGenerateRoute: generateRoute,
           builder: (context, child) {
-            // getAuthBloc()?.add(
-            //     LoginEvent(email: "hariprasath@gmail.com", password: "Hari@123"));
+           getUserBloc()?.add(GetCurrentUserEvent());
             return Scaffold(
               body: child,
             );

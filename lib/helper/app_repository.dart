@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:chat_baba/helper/api_helper.dart';
 import 'package:chat_baba/helper/api_service_helper.dart';
+import 'package:chat_baba/model/request/change_user_password_request.dart';
 import 'package:chat_baba/model/request/create_chat_request.dart';
 import 'package:chat_baba/model/request/send_message_request.dart';
 import 'package:chat_baba/model/response/get_chats_response.dart';
@@ -102,6 +103,22 @@ class AppRepository {
   Future<GetMessagesResponse> sendMessage(SendMessageRequest sendMessageRequest) async {
     try{
       return await helper.sendMessage(sendMessageRequest);
+    }catch(e){
+      rethrow;
+    }
+  }
+
+  Future<String> logout() async {
+    try{
+      return await helper.logout();
+    }catch(e){
+      rethrow;
+    }
+  }
+
+  changePassword(ChangeUserPasswordRequest changeUserPasswordRequest) async {
+    try{
+      return await helper.changePassword(changeUserPasswordRequest);
     }catch(e){
       rethrow;
     }

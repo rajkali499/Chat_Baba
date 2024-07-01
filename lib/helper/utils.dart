@@ -32,13 +32,14 @@ getLocalFormat(String value) {
     return (date: '', time: '');
   }
   var df;
-  if(value.contains("T")) {
-     df = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
-  }else{
+  if (value.contains("T")) {
+    df = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+  } else {
     df = DateFormat("yyyy-MM-dd' 'HH:mm:ss.SSS");
   }
   try {
-    DateTime time = df.parse(value, true);
+    DateTime time = df.parse(value, true).toUtc().add(
+        const Duration(hours: 5, minutes: 30)); // Convert to IST (UTC+5:30)
 
     String formattedDate = DateFormat("MMM dd, yyyy").format(time);
     String formattedTime = DateFormat("hh:mm a").format(time);
